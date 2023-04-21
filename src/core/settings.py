@@ -37,6 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    #jwt
+    'rest_framework_simplejwt',
+    # applications
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -50,6 +54,15 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'core.urls'
+
+REST_FRAMEWORK = {
+    
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+    
+}
 
 TEMPLATES = [
     {
@@ -68,6 +81,9 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'core.wsgi.application'
+
+# Application definition
+AUTH_USER_MODEL = 'users.ExtendedUser'
 
 
 # Database
