@@ -33,6 +33,9 @@ class ExtendedUser(AbstractUser, CreationTimeStamp):
     middle_name = models.CharField(max_length=255)
     role = models.ForeignKey("Role", on_delete=models.CASCADE, null=True)
 
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['first_name', 'last_name']
+
     objects = CustomUserManager()
 
     def __str__(self):
