@@ -42,8 +42,7 @@ class SurveySerializer(serializers.ModelSerializer):
         }
 
 
-from rest_framework import serializers
-from .models import Question
+
 
 class QuestionSerializer(serializers.ModelSerializer):
     class Meta:
@@ -70,9 +69,9 @@ class QuestionSerializer(serializers.ModelSerializer):
 class QuestionAnswerSerializer(serializers.ModelSerializer):
     class Meta:
         model = QuestionAnswer
-        fields = ('question', 'responses', 'location')
+        fields = ('question', 'responses')
         extra_kwargs = {
             'question': {'required': True},
             'responses': {'required': True},
-            'location': {'required': True},
+            #'location': {'required': True},
         }
