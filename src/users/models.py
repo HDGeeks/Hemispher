@@ -1,5 +1,7 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser, BaseUserManager
+from django.contrib.auth.models import AbstractUser, BaseUserManager,Group
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 # Create your models here.
@@ -31,7 +33,7 @@ class ExtendedUser(AbstractUser, CreationTimeStamp):
     email = models.EmailField(max_length=255, verbose_name="email", unique=True)
     email_verified = models.BooleanField(default=False)
     middle_name = models.CharField(max_length=255)
-    role = models.ForeignKey("Role", on_delete=models.CASCADE, null=True)
+    #role = models.ForeignKey("Role", on_delete=models.CASCADE, null=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name']
@@ -39,7 +41,7 @@ class ExtendedUser(AbstractUser, CreationTimeStamp):
     objects = CustomUserManager()
 
     def __str__(self):
-        return f"{self.email} {self.role}"
+        return f"{self.email}"
 
 
 class Role(models.Model):
@@ -49,3 +51,13 @@ class Role(models.Model):
 
     def __str__(self):
         return self.role
+
+@receiver(post_save, sender=ExtendedUser)
+def assign_default_group(sender, instance, created, **kwargs):
+    if created:
+        if instance.is_superuser:
+            admin_group, _ = Group.objects.get_or_create(name='Admin')
+            instance.groups.add(admin_group)
+        else:
+            data_collector_group, _ = Group.objects.get_or_create(name='Data-Collector')
+            instance.groups.add(data_collector_group)

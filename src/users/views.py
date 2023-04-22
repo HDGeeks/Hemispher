@@ -14,12 +14,38 @@ class CreateUserView(ModelViewSet):
     serializer_class = UserSerializer
     #permission_classes = [permissions.IsAuthenticated]
 
-    def perform_create(self, serializer):
+    def create(self, request, *args, **kwargs):
         # hash the password before saving the user
-        password = serializer.validated_data.get('password')
+        data = request.data.copy()
+     
+        # hash the password before saving the user
+        password = data.get('password')
         hashed_password = make_password(password)
-        serializer.validated_data['password'] = hashed_password
-        serializer.save()
+        data['password'] = hashed_password
+        
+        # create the user object
+        serializer = self.get_serializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+
+        # get the email and unhashed password from the request data
+        email = data.get('email')
+        password = password
+        response_data = serializer.data.copy()
+        response_body={"Message":"User created successfully",
+                       "Email":email,
+                       "Password":password}
+        # return the response
+        headers = self.get_success_headers(serializer.data)
+        return Response(response_body, status=status.HTTP_201_CREATED, headers=headers)
+    
+    # def perform_create(self, serializer):
+    #     # hash the password before saving the user
+    #     password = serializer.validated_data.get('password')
+    #     hashed_password = make_password(password)
+    #     serializer.validated_data['password'] = hashed_password
+    #     serializer.save()
+       
         
 
 
