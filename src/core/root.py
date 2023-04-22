@@ -11,5 +11,11 @@ def api_root(request, format=None):
         'token_obtain_pair': reverse('token_obtain_pair', request=request, format=format),
         'token_refresh': reverse('token_refresh', request=request, format=format),
         'token_verify': reverse('token_verify', request=request, format=format),
+        'customers': reverse('customers-list', request=request, format=format),
+        'projects': reverse('projects-list', request=request, format=format),
+        'surveys': reverse('surveys-list', request=request, format=format),
+        'questions': reverse('questions-list', request=request, format=format),
+        'answers': reverse('answers-list', request=request, format=format),
+
        
     })
