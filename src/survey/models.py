@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 
 # from django.contrib.postgres.fields import ArrayField
 # from location_field.models.plain import PlainLocationField
@@ -8,7 +9,7 @@ from django_extensions.db.fields import *
 
 class Customer(CreationTimeStamp):
     name = models.CharField(max_length=200, unique=True)
-    description = models.TextField()
+    description = models.TextField(null=True,blank=True,default='')
     location = models.CharField(max_length=100)
     contact = models.CharField(max_length=100)
 

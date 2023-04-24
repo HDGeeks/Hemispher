@@ -7,10 +7,12 @@ from rest_framework_simplejwt.views import (
 
 from users.views import CreateUserView,signin
 
+
 # define all urls related to the users app
 router = routers.DefaultRouter(trailing_slash=False)
 
 router.register(r"create-new-user",CreateUserView ,basename ="users")
+#router.register(r'djoser-users', UserViewSet ,basename='djoser-users')
 #router.register(r"sign-in",SignIn,basename = "sign-in")
 
 

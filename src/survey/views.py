@@ -1,7 +1,7 @@
 from .serializers import *
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
-from .models import *
+from .models import Customer,Project,Question,QuestionAnswer,Survey
 
 class CustomerViewSet(ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]

@@ -1,11 +1,12 @@
 from rest_framework import permissions,status
-from django.contrib.auth import authenticate,login
+from django.contrib.auth import authenticate
 from rest_framework.decorators import action ,api_view
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
 from .serializers import UserSerializer
-from .models import ExtendedUser,Role
+from .models import ExtendedUser
 from rest_framework_simplejwt.tokens import RefreshToken,AccessToken
+from djoser.serializers import UserCreateSerializer
 
 from django.contrib.auth.hashers import make_password
 

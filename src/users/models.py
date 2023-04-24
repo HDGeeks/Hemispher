@@ -1,5 +1,6 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser, BaseUserManager,Group
+from django.contrib.auth.models import AbstractUser, BaseUserManager,Group,AbstractBaseUser
+from django.contrib.auth.signals import user_logged_in
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
@@ -32,7 +33,9 @@ class ExtendedUser(AbstractUser, CreationTimeStamp):
     phone = models.CharField(max_length=20, unique=True)
     email = models.EmailField(max_length=255, verbose_name="email", unique=True)
     email_verified = models.BooleanField(default=False)
-    middle_name = models.CharField(max_length=255)
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
+    #username = models.CharField(max_length=255,null=True,blank=True)
     #role = models.ForeignKey("Role", on_delete=models.CASCADE, null=True)
 
     USERNAME_FIELD = 'email'
@@ -61,3 +64,10 @@ def assign_default_group(sender, instance, created, **kwargs):
         else:
             data_collector_group, _ = Group.objects.get_or_create(name='Data-Collector')
             instance.groups.add(data_collector_group)
+
+
+@receiver(user_logged_in)
+def force_password_change(sender, user, request, **kwargs):
+    if not user.email_verified:
+        # Redirect the user to the password change page
+        request.session['force_password_change'] = True

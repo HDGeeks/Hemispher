@@ -7,6 +7,7 @@ from rest_framework.reverse import reverse
 def api_root(request, format=None):
     return Response({
         'create-new-user': reverse('users-list', request=request, format=format),
+        #'djoser-users': reverse('djoser-users-list', request=request, format=format),
         'sign-in': reverse('sign-in', request=request, format=format),
         'token_obtain_pair': reverse('token_obtain_pair', request=request, format=format),
         'token_refresh': reverse('token_refresh', request=request, format=format),

@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django_extensions',
     #jwt
     'rest_framework_simplejwt',
+    'djoser',
     # applications
     'users',
     'survey',
