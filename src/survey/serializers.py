@@ -19,7 +19,8 @@ class ProjectSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Project
-        fields = ['id','customer','name','description','date','location','noOfDataCollectors','budget']
+        #fields = ['id','customer','name','description','date','location','noOfDataCollectors','budget']
+        fields='__all__'
         extra_kwargs = {
             'customer': {'required': True},
             'name': {'required': True},
@@ -34,6 +35,7 @@ class SurveySerializer(serializers.ModelSerializer):
     class Meta:
         model = Survey
         fields = ['id', 'project', 'name', 'description', 'status']
+        fields='__all__'
         extra_kwargs = {
             'project': {'required': True},
             'name': {'required': True},
@@ -47,20 +49,21 @@ class SurveySerializer(serializers.ModelSerializer):
 class QuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Question
-        fields = ('survey', 'title', 'has_multiple_answers', 'is_dependent', 'dependent_question',
-                  'is_required', 'type', 'options', 'audio_url', 'image_url', 'video_url')
+        # fields = ('survey', 'title', 'has_multiple_answers', 'is_dependent', 'dependent_question',
+        #           'is_required', 'type', 'options', 'audio_url', 'image_url', 'video_url')
+        fields='__all__'
         extra_kwargs = {
             'survey': {'required': True},
             'title': {'required': True},
-            'has_multiple_answers': {'required': True},
-            'is_dependent': {'required': True},
-            'dependent_question': {'required': True},
+            'has_multiple_answers': {'required': False},
+            'is_dependent': {'required': False},
+            'dependent_question': {'required': False},
             'is_required': {'required': True},
             'type': {'required': True},
-            'options': {'required': True},
-            'audio_url': {'required': True},
-            'image_url': {'required': True},
-            'video_url': {'required': True},
+            'options': {'required': False},
+            'audio_url': {'required': False},
+            'image_url': {'required': False},
+            'video_url': {'required': False},
         }
 
 
