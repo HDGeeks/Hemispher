@@ -39,11 +39,20 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'location_field.apps.DefaultConfig',
+    'django_extensions',
     #jwt
     'rest_framework_simplejwt',
+    'djoser',
     # applications
     'users',
+    'survey',
 ]
+LOCATION_FIELD = {
+    #'provider.mapbox.access_token': MAPBOX_TOKEN,
+    'provider.mapbox.max_zoom': 13,
+    'provider.mapbox.id': 'mapbox.streets',
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
